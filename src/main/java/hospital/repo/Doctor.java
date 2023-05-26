@@ -16,7 +16,7 @@ public class Doctor {
     private String branch;
 
 
-    Doctor(){
+    public Doctor(){
 
     }
 

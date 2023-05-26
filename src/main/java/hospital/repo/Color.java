@@ -1,6 +1,9 @@
 package hospital.repo;
 
+import java.util.Scanner;
+
 public class Color {
+   public static Scanner scan= new Scanner(System.in);
    public static final String ANSI_RESET = "\u001B[0m";
    public static final String BLACK = "\u001B[30m";
    public static final String RED = "\u001B[31m";

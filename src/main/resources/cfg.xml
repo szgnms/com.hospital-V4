@@ -21,7 +21,15 @@
         <property name="hibernate.format_sql">true</property>
 
         <!-- Entity sınıflarının paketleri -->
-         <mapping class="hibernate.Patient"/>
+         <mapping class="hospital.repo.Branch"/>
+         <mapping class="hospital.repo.DischargedPatient"/>
+         <mapping class="hospital.repo.Disease"/>
+         <mapping class="hospital.repo.Doctor"/>
+         <mapping class="hospital.repo.Patient"/>
+         <mapping class="hospital.diseases.Diseases"/>
+         <mapping class="hospital.repo.Floors"/>
+
+
 
         <!-- Ek yapılandırma ayarları -->
         <!-- ... -->

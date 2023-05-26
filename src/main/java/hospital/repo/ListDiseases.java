@@ -122,6 +122,7 @@ public class ListDiseases {
                         BLUE + "9- OralAndDentalDiseases\n" +
                         WHITE + "10- Cardiology");
     }
+    /*
     public  void selectDisease(){
         int index =1;
         diseasesList();
@@ -292,6 +293,6 @@ public class ListDiseases {
 
         }
 
-    }
+    }*/
 
 }
