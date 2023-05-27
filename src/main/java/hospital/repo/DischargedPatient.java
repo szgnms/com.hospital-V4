@@ -3,7 +3,6 @@ package hospital.repo;
 import jakarta.persistence.*;
 
 
-
 @Entity
 @Table(name = "t_discharged_patient")
 public class DischargedPatient {
@@ -19,15 +18,19 @@ public class DischargedPatient {
     @Column(name = "room")
     private int room;
 
+    @Column(name = "doctor_id")
+    private int doctorId;
+
     public DischargedPatient() {
     }
 
-    public DischargedPatient(int id, String name, String surname, String disease, int room) {
+    public DischargedPatient(int id, String name, String surname, String disease, int room, int doctorId) {
         this.id = id;
         this.name = name;
         this.surname = surname;
         this.disease = disease;
         this.room = room;
+        this.doctorId = doctorId;
     }
 
     public int getId() {
@@ -70,6 +73,14 @@ public class DischargedPatient {
         this.room = room;
     }
 
+    public int getDoctorId() {
+        return doctorId;
+    }
+
+    public void setDoctorId(int doctorId) {
+        this.doctorId = doctorId;
+    }
+
     @Override
     public String toString() {
         return
@@ -77,7 +88,8 @@ public class DischargedPatient {
                         " name=" + name +
                         " surname=" + surname +
                         " disease=" + disease +
-                        " room=" + room;
+                        " room=" + room +
+                        "doctor id=" + doctorId;
 
     }
 }
