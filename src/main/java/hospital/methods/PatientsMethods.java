@@ -44,13 +44,64 @@ public class PatientsMethods implements WrongInput {
         switch (menuSecim) {
             case "1" -> patientRegistiration();
             // case "2" -> patientSearch();
-            //  case "3" -> patientDischarge();
+              case "3" -> patientDischarge();
             //   case "4" -> allPatients();
             //  case "5" -> allDischargedPatients();
             //  case "6" -> new MainMenuMethods().hospitalRun();
             default -> wrongMethod();
         }
     }
+
+    private void patientDischarge() {
+
+
+
+            System.out.println("Please select a doctor to delete");
+            patientId = scan.nextInt();
+
+            try {
+                session = factory.openSession();
+                tx = session.beginTransaction();
+
+                patient = findPatientById(patientId);
+
+                session.get(Patient.class, patientId);
+                session.remove(patient);
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                wrongMethod();
+            }
+
+
+            new MainMenuMethods().hospitalRun();
+
+
+
+    }
+
+    private Patient findPatientById(int patientId) {
+
+            try {
+
+                session = factory.openSession();
+                tx = session.beginTransaction();
+
+                List<Patient> patientList = session.createQuery("from Patient").list();
+                for (Patient patient1 : patientList) {
+                    if (patient1.getId() == patientId) {
+                        return patient1;
+                    }
+                }
+
+                tx.commit();
+                session.close();
+            } catch (Exception e) {
+                System.out.println("findDc");
+            }
+            return null;
+        }
+
 
 
     public void patientRegistiration() {

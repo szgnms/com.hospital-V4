@@ -257,6 +257,7 @@ public class DoctorMethods implements WrongInput {
         System.out.println();
     }
 
+
     @Override
     public void wrongMethod() {
         System.out.println(RED + "PLEASE SELECT CORRECT \nREDIRECTING TO MENU");
