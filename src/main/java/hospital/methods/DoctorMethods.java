@@ -6,8 +6,7 @@ import hospital.repo.WrongInput;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static hospital.methods.HibernateConnect.session;
-import static hospital.methods.HibernateConnect.tx;
+import static hospital.methods.HibernateConnect.*;
 import static hospital.methods.MainMenuMethods.menuSecim;
 import static hospital.methods.MainMenuMethods.scan;
 import static hospital.repo.Branch.branchList;
@@ -49,8 +48,15 @@ public class DoctorMethods implements WrongInput {
         printDoctrList();
         System.out.println("Please select a doctor to update");
         doctorId = scan.nextInt();
-        doctor = session.get(Doctor.class, doctorId);
-
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            doctor = session.get(Doctor.class, doctorId);
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println(" jjjjs");
+        }
         System.out.println("""
                 Please select ->
                 1-Name
@@ -61,24 +67,45 @@ public class DoctorMethods implements WrongInput {
 
         switch (select) {
             case "1" -> {
-                System.out.println("Please enter value");
-                String value = scan.next();
-                doctor.setName(value);
-                tx.commit();
+                try {
+                    session = factory.openSession();
+                    tx = session.beginTransaction();
+                    System.out.println("Please enter value");
+                    String value = scan.next();
+                    doctor.setName(value);
+                    tx.commit();
+                    session.close();
+
+                } catch (Exception e) {
+                    System.out.println("s1");
+                }
             }
             case "2" -> {
-                System.out.println("Please enter value");
-                String value = scan.next();
-                doctor.setSurname(value);
-                tx.commit();
+                try {
+                    session = factory.openSession();
+                    tx = session.beginTransaction();
+                    System.out.println("Please enter value");
+                    String value = scan.next();
+                    doctor.setSurname(value);
+                    tx.commit();
+                    session.close();
+
+                } catch (Exception e) {
+                    System.out.println("s2");
+                }
             }
             case "3" -> {
-                updateDoctorBranch();
-                tx.commit();
+                try {
+                    session = factory.openSession();
+                    tx = session.beginTransaction();
+                    updateDoctorBranch();
+                    tx.commit();
+                    session.close();
+                } catch (Exception e) {
+                    System.out.println("s3");
+                }
             }
         }
-
-
 
 
         doctorMenu();
@@ -89,7 +116,7 @@ public class DoctorMethods implements WrongInput {
         printbranchList();
         System.out.println("Please select a branch to update");
         String branch = scan.next();
-        String value="";
+        String value = "";
 
         switch (branch) {
             case "1" -> value = branchList.get(0);
@@ -122,11 +149,15 @@ public class DoctorMethods implements WrongInput {
         doctorId = scan.nextInt();
 
         try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+
             doctor = findDoctorById(doctorId);
 
             session.get(Doctor.class, doctorId);
             session.remove(doctor);
             tx.commit();
+            session.close();
         } catch (Exception e) {
             wrongMethod();
         }
@@ -138,18 +169,39 @@ public class DoctorMethods implements WrongInput {
     }
 
     private void printDoctrList() {
-        List<Doctor> doctorList = session.createQuery("from Doctor").list();
-        for (Doctor doctor : doctorList) {
-            System.out.println(doctor);
+        try {
+
+            session = factory.openSession();
+            tx = session.beginTransaction();
+            List<Doctor> doctorList = session.createQuery("from Doctor").list();
+            for (Doctor doctor : doctorList) {
+                System.out.println(doctor);
+            }
+
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("print icin");
         }
     }
 
     private Doctor findDoctorById(int doctorId) {
-        List<Doctor> doctorList = session.createQuery("from Doctor").list();
-        for (Doctor doctor : doctorList) {
-            if (doctor.getDoctorId() == doctorId) {
-                return doctor;
+        try {
+
+            session = factory.openSession();
+            tx = session.beginTransaction();
+
+            List<Doctor> doctorList = session.createQuery("from Doctor").list();
+            for (Doctor doctor : doctorList) {
+                if (doctor.getDoctorId() == doctorId) {
+                    return doctor;
+                }
             }
+
+            tx.commit();
+            session.close();
+        } catch (Exception e) {
+            System.out.println("findDc");
         }
         return null;
     }
@@ -178,10 +230,19 @@ public class DoctorMethods implements WrongInput {
             case "10" -> doctorBranch = branchList.get(9);
         }
 
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
 
-        doctor = new Doctor(doctorId, doctorName, doctorSurname, doctorBranch);
-        session.persist(doctor);
-        tx.commit();
+            doctor = new Doctor(doctorId, doctorName, doctorSurname, doctorBranch);
+
+            session.persist(doctor);
+            tx.commit();
+            session.close();
+
+        } catch (Exception e) {
+            System.out.println("Doctor Methods");
+        }
         new MainMenuMethods().hospitalRun();
 
     }
