@@ -51,8 +51,7 @@ public class PatientsMethods implements WrongInput {
         }
     }
 
-   
-              
+
     public void patientRegistiration() {
 
         try {
@@ -163,6 +162,8 @@ public class PatientsMethods implements WrongInput {
             System.out.println("List icin");
         }
 
+        patientMenu();
+
     }
 
 
@@ -206,6 +207,8 @@ public class PatientsMethods implements WrongInput {
                 Exception e) {
             System.out.println("List icin");
         }
+        patientMenu();
+
 
     }
 
