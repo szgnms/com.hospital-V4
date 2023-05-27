@@ -51,7 +51,8 @@ public class PatientsMethods implements WrongInput {
         }
     }
 
-
+   
+              
     public void patientRegistiration() {
 
         try {
@@ -124,8 +125,6 @@ public class PatientsMethods implements WrongInput {
             System.out.println("Patients Methods");
         }
         new MainMenuMethods().hospitalRun();
-
-
     }
 
 
