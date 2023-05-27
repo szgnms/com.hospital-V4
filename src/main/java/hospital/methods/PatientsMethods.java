@@ -3,6 +3,7 @@ package hospital.methods;
 import hospital.repo.*;
 import jakarta.persistence.Query;
 
+import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -34,20 +35,18 @@ public class PatientsMethods implements WrongInput {
         System.out.println("""
                 Please select ->
                 1-Patient Registration
-                2-Patient Search
-                3-Patient Discharged
-                4-All Patients
-                5-All Discharged Patients
-                6-Main Menu""");
+                2-Patient Discharged
+                3-All Patients
+                4-All Discharged Patients
+                5-Main Menu""");
         System.out.print("Your Selection : ");
         MainMenuMethods.menuSecim = scan.next();
         switch (menuSecim) {
             case "1" -> patientRegistiration();
-            // case "2" -> patientSearch();
-            //  case "3" -> patientDischarge();
-            //   case "4" -> allPatients();
-            //  case "5" -> allDischargedPatients();
-            //  case "6" -> new MainMenuMethods().hospitalRun();
+            case "2" -> patientDischarge();
+            case "3" -> allPatients();
+            case "4" -> allDischargedPatients();
+            case "5" -> new MainMenuMethods().hospitalRun();
             default -> wrongMethod();
         }
     }
@@ -126,6 +125,88 @@ public class PatientsMethods implements WrongInput {
         }
         new MainMenuMethods().hospitalRun();
 
+
+    }
+
+
+    public void patientDischarge() {
+
+        int dischargeId = 0;
+        int count = 0;
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+
+            List<Patient> patients = session.createQuery("from Patient").list();
+            for (Patient p : patients) {
+                System.out.println((count + 1) + " " + p);
+                count++;
+            }
+
+            System.out.println("Please select id for discharge_patient : ");
+            dischargeId = scan.nextInt() - 1;
+            DischargedPatient dischargedPatient = new DischargedPatient();
+            dischargedPatient.setId(patients.get(dischargeId).getId());
+            dischargedPatient.setName(patients.get(dischargeId).getName());
+            dischargedPatient.setSurname(patients.get(dischargeId).getSurname());
+            dischargedPatient.setDisease(patients.get(dischargeId).getDisease());
+            dischargedPatient.setRoom(patients.get(dischargeId).getRoom());
+            dischargedPatient.setDoctorId(patients.get(dischargeId).getDrId());
+
+            System.out.println(dischargedPatient);
+            session.persist(dischargedPatient);
+            session.remove(patients.get(dischargeId));
+            tx.commit();
+            session.close();
+
+        } catch (
+                Exception e) {
+            System.out.println("List icin");
+        }
+
+    }
+
+
+    public void allPatients() {
+        try {
+
+            session = factory.openSession();
+            tx = session.beginTransaction();
+
+            List<Patient> patients = session.createQuery("from Patient").list();
+            for (Patient p : patients) {
+                System.out.println(p);
+            }
+            tx.commit();
+            session.close();
+
+        } catch (
+                Exception e) {
+            System.out.println("All List icin");
+        }
+        patientMenu();
+    }
+
+    public void allDischargedPatients() {
+        int dischargeId = 0;
+        int count = 0;
+        try {
+            session = factory.openSession();
+            tx = session.beginTransaction();
+
+            List<DischargedPatient> patients = session.createQuery("from DischargedPatient").list();
+
+            for (DischargedPatient p : patients) {
+                System.out.println(p);
+            }
+
+            tx.commit();
+            session.close();
+
+        } catch (
+                Exception e) {
+            System.out.println("List icin");
+        }
 
     }
 
