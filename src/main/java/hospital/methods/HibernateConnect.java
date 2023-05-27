@@ -9,12 +9,13 @@ import org.hibernate.cfg.Configuration;
 public class HibernateConnect {
 
 
-    static Session session = null;
-    static Transaction tx = null;
+    public static Session session = null;
+    public static Transaction tx = null;
+    public static SessionFactory factory = null;
 
     static {
 
-        SessionFactory factory = new Configuration().
+        factory = new Configuration().
                 configure("cfg.xml").
                 addAnnotatedClass(Branch.class).
                 addAnnotatedClass(DischargedPatient.class).
@@ -23,8 +24,6 @@ public class HibernateConnect {
                 addAnnotatedClass(Patient.class).
                 buildSessionFactory();
 
-        session = factory.openSession();
-        tx = session.beginTransaction();
 
     }
 }

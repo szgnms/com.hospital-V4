@@ -10,25 +10,27 @@
         <property name="hibernate.connection.username">dev3</property>
         <property name="hibernate.connection.password">123456Aa</property>
         <property name="hibernate.current_session_context_class">
-            org.hibernate.context.internal.ThreadLocalSessionContext</property>
+            org.hibernate.context.internal.ThreadLocalSessionContext
+        </property>
         <property name="current_session_context_class">thread</property>
 
         <!-- Veritabanı dialekti -->
         <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
 
         <!-- Etkinleştirilen özellikler -->
-        <property name="hibernate.show_sql">true</property>
+        <property name="hibernate.show_sql">false</property>
         <property name="hibernate.format_sql">true</property>
+        <property name="hbm2ddl.auto">update</property>
+
 
         <!-- Entity sınıflarının paketleri -->
-         <mapping class="hospital.repo.Branch"/>
-         <mapping class="hospital.repo.DischargedPatient"/>
-         <mapping class="hospital.repo.Disease"/>
-         <mapping class="hospital.repo.Doctor"/>
-         <mapping class="hospital.repo.Patient"/>
-         <mapping class="hospital.diseases.Diseases"/>
-         <mapping class="hospital.repo.Floors"/>
-
+        <mapping class="hospital.repo.Branch"/>
+        <mapping class="hospital.repo.DischargedPatient"/>
+        <mapping class="hospital.repo.Disease"/>
+        <mapping class="hospital.repo.Doctor"/>
+        <mapping class="hospital.repo.Patient"/>
+        <mapping class="hospital.diseases.Diseases"/>
+        <mapping class="hospital.repo.Floors"/>
 
 
         <!-- Ek yapılandırma ayarları -->

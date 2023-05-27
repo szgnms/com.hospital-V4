@@ -28,7 +28,7 @@ public class MainMenuMethods implements WrongInput {
         menuSecim = scan.next();
         switch (menuSecim) {
             case "1" -> new DoctorMethods().doctorMenu();
-           // case "2" -> new PatientsMethods().patientMenu();
+            case "2" -> new PatientsMethods().patientMenu();
             case "3" -> System.exit(0);
             default -> wrongMethod();
         }
